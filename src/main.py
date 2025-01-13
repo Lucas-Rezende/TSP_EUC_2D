@@ -1,3 +1,4 @@
+import sys
 from christofides import *
 from twice_around_the_tree import *
 
@@ -12,7 +13,8 @@ def main():
         print("Branch and Bound ainda não implementado.")
         return
 
-    print("Custo total:", cost)
+    with open('results.txt', 'a') as f:
+        f.write(f"{sys.argv[2]}: {cost}\n")
 
 if __name__ == "__main__":
     main()

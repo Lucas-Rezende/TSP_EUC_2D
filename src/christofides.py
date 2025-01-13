@@ -1,5 +1,6 @@
 from utils import util
-import networkx as nx # type: ignore 
+import networkx as nx # type: ignore
+import timeout # type: ignore 
 
 """
 Christofides(G):
@@ -9,6 +10,7 @@ Christofides(G):
     Step 4) Elimine vértices duplicados, substituindo subcaminhos u-w-v por arestas u-v (Implicítamente é feito na conversão do circuito euleriano para o circuito hamiltoniano).
 """
 
+@timeout(seconds=1800, default=None)
 def approx_christofides_tour(G):
     # Step 1)
     MST_T = util.MST(G)

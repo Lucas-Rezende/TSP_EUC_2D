@@ -1,5 +1,6 @@
 from utils import util
 import random
+import timeout # type: ignore
 
 """
 APPROX-TSP-TOUR (G, c)
@@ -9,6 +10,7 @@ APPROX-TSP-TOUR (G, c)
     Step 4) return the hamiltonian cycle H
 """
 
+@timeout(seconds=1800, default=None)
 def approx_twice_around_the_tree_tour(G, c):
     """Aproximação do problema do Caixeiro Viajante usando Twice Around The Tree."""
     root = random.choice(list(G.nodes)) # Step 1)
