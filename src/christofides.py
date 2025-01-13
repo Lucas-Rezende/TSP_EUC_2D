@@ -4,11 +4,8 @@ import networkx as nx # type: ignore
 """
 Christofides(G):
     Step 1) Compute T uma árvore geradora mínima de G
-    
     Step 2) Seja I o conjunto de vértices de grau ímpar de T. Compute M, um matching perfeito de peso mínimo no subgrafo induzido por I
-    
     Step 3) Seja G' o multigrafo formado com os vértices de V e aresta de M e T. Compute um circuito euleriano eulerian_circuit em G' (aplicar DFS)
-    
     Step 4) Elimine vértices duplicados, substituindo subcaminhos u-w-v por arestas u-v (Implicítamente é feito na conversão do circuito euleriano para o circuito hamiltoniano).
 """
 
@@ -24,7 +21,6 @@ def approx_christofides_tour(G):
     if not I:
         # Quando não há vértices de grau ímpar, não é necessário calcular o matching perfeito de peso mínimo
         G_prime = nx.MultiGraph(MST_T)
-        
     elif len(I) % 2 == 0: 
         # Pelo lema do aperto de mão, I possui um número par de arestas. (Font: https://en.wikipedia.org/wiki/Christofides_algorithm)
         subgrafo_induzido_por_I = G.subgraph(I)
