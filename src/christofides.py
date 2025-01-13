@@ -1,6 +1,7 @@
 from utils import util
 import networkx as nx # type: ignore
-import timeout # type: ignore 
+from timeout_decorator import timeout # type: ignore
+import time
 
 """
 Christofides(G):
@@ -10,8 +11,9 @@ Christofides(G):
     Step 4) Elimine vértices duplicados, substituindo subcaminhos u-w-v por arestas u-v (Implicítamente é feito na conversão do circuito euleriano para o circuito hamiltoniano).
 """
 
-@timeout(seconds=1800, default=None)
+@timeout(1800)
 def approx_christofides_tour(G):
+    start = time.time()
     # Step 1)
     MST_T = util.MST(G)
     
@@ -44,4 +46,7 @@ def approx_christofides_tour(G):
 
     cost = util.cost_calculator_christophies(G, H)
     
-    return cost
+    end = time.time()
+    total_time = end - start
+    
+    return cost, total_time

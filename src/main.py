@@ -6,15 +6,15 @@ def main():
     G, c, arg = util.starter()
 
     if arg == "TAT":
-        cost = approx_twice_around_the_tree_tour(G, c)
+        cost, time = approx_twice_around_the_tree_tour(G, c)
     elif arg == "C":
-        cost = approx_christofides_tour(G)
+        cost, time = approx_christofides_tour(G)
     elif arg == "BNB":
         print("Branch and Bound ainda não implementado.")
         return
 
     with open('results.txt', 'a') as f:
-        f.write(f"{sys.argv[2]}: {cost}\n")
+        f.write(f"{sys.argv[2]} | Custo: {cost} | Tempo: {time}s\n")
 
 if __name__ == "__main__":
     main()
