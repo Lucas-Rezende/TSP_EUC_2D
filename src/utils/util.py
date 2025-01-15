@@ -4,6 +4,26 @@ import math
 
 # Gerais
 
+def arguments_tsp():
+    """Facilita o uso de tags no terminal para escolher o algoritmo"""
+    parser = argparse.ArgumentParser(description='')
+    parser.add_argument('algorithm', choices=['TAT', 'C', 'BNB'])
+    parser.add_argument('file_path', type=str)
+    return parser.parse_args()
+
+def starter():
+    """Inicialização"""
+    args = arguments_tsp()
+
+    with open(args.file_path, 'r') as file:
+        data = file.read()
+
+    nodes = tsp_input(data)
+    G = buildGraph(nodes)
+    c = nx.get_edge_attributes(G, 'weight')
+    
+    return G, c, args.algorithm
+
 def tsp_input(data):
     """Interpreta entradas .tsp da TSPLIB"""
     nodes = {}
@@ -22,10 +42,6 @@ def tsp_input(data):
             nodes[node_id] = (x, y)
     return nodes
 
-def euclidean_distance(coord1, coord2):
-    """Calcula a distância euclidiana entre dois pontos/vértices"""
-    return math.sqrt((coord1[0] - coord2[0])**2 + (coord1[1] - coord2[1])**2)
-
 def buildGraph(nodes):
     """Cria o grafo com NetworkX para a instância."""
     G = nx.Graph()
@@ -34,27 +50,13 @@ def buildGraph(nodes):
     for i in nodes:
         for j in nodes:
             if i != j:
-                dist = euclidean_distance(nodes[i], nodes[j])
+                dist = euclidean_dist(nodes[i], nodes[j])
                 G.add_edge(i, j, weight=dist)
     return G
 
-def arguments_tsp():
-    parser = argparse.ArgumentParser(description='')
-    parser.add_argument('algorithm', choices=['TAT', 'C', 'BNB'])
-    parser.add_argument('file_path', type=str)
-    return parser.parse_args()
-
-def starter():
-    args = arguments_tsp()
-
-    with open(args.file_path, 'r') as file:
-        data = file.read()
-
-    nodes = tsp_input(data)
-    G = buildGraph(nodes)
-    c = nx.get_edge_attributes(G, 'weight')
-    
-    return G, c, args.algorithm
+def euclidean_dist(coord1, coord2):
+    """Calcula a distância euclidiana entre dois pontos/vértices"""
+    return math.sqrt((coord1[0] - coord2[0])**2 + (coord1[1] - coord2[1])**2)
 
 # Códigos usados nos algoritmos aproximativos:
 
