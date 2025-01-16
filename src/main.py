@@ -1,6 +1,7 @@
 import sys
 from christofides import *
 from twice_around_the_tree import *
+from BaB_TSP import *
 
 def main():
     G, c, arg = util.starter()
@@ -10,7 +11,7 @@ def main():
     elif arg == "C":
         cost, time = approx_christofides_tour(G)
     elif arg == "BNB":
-        print("Branch and Bound ainda não implementado.")
+        path, cost = BaB_TSP(G)
         return
 
     with open('results.txt', 'a') as f:
