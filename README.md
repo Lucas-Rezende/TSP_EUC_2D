@@ -13,8 +13,4 @@
 - **`make test_tat`**, **`make test_c`**, **`make test_bnb`**:
   Executam pilha de testes dos diretório `tests` (TSPLIB) ou `tests/adapted_tests` usando os algoritmos `Twice Around The Tree`, `Christophies` ou `Branch and Bound`.
 
-<<<<<<< Updated upstream
 - **`make clean`**: Remove arquivos temporários (`__pycache__`, `results.txt`).
-=======
-- **`make clean`**: Remove arquivos temporários (`__pycache__`, `results.txt`).
->>>>>>> Stashed changes
