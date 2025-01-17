@@ -2,6 +2,10 @@
 
 from utils import *
 import heapq
+from timeout_decorator import timeout # type: ignore
+import time
+import math
+import tracemalloc
 
 def ordenaEdgesPesos(Graph):
     ordenados = []
@@ -56,6 +60,7 @@ def bound(graph, edgesOrdenados, path):
 
     return math.ceil(cost + bound_estimate / 2)
 
+@timeout(1800)
 def BaB_TSP(graph):
     """
     Resolve o problema do caixeiro viajante (TSP) usando Branch-and-Bound.
@@ -66,6 +71,8 @@ def BaB_TSP(graph):
     Returns:
         Uma tupla (melhor_caminho, melhor_custo).
     """
+    start = time.time()
+    tracemalloc.start()
     n = graph.number_of_nodes()
     # Pré-calcula as arestas ordenadas
     ordenados = ordenaEdgesPesos(graph)
@@ -102,4 +109,11 @@ def BaB_TSP(graph):
                     if new_bound < best_cost:
                         heapq.heappush(queue, (new_bound, level + 1, new_cost, new_path))
 
-    return best_path, best_cost
+    # Captura o uso de memória
+    peak_memory = tracemalloc.get_traced_memory()
+    tracemalloc.stop()  # Para o monitoramento de memória
+
+    end = time.time()
+    total_time = end - start
+
+    return best_cost, total_time, peak_memory

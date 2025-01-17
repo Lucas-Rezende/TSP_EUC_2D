@@ -2,6 +2,7 @@ from utils import util
 import networkx as nx # type: ignore
 from timeout_decorator import timeout # type: ignore
 import time
+import tracemalloc
 
 """
 Christofides(G):
@@ -14,6 +15,7 @@ Christofides(G):
 @timeout(1800)
 def approx_christofides_tour(G):
     start = time.time()
+    tracemalloc.start()
     # Step 1)
     MST_T = util.MST(G)
     
@@ -46,7 +48,11 @@ def approx_christofides_tour(G):
 
     cost = util.cost_calculator_christophies(G, H)
     
+    # Captura o uso de memória
+    peak_memory = tracemalloc.get_traced_memory()
+    tracemalloc.stop()  # Para o monitoramento de memória
+    
     end = time.time()
     total_time = end - start
     
-    return cost, total_time
+    return cost, total_time, peak_memory
